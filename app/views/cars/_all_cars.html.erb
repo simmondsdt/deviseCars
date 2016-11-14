@@ -1,0 +1,20 @@
+<% if @cars.any? %>
+  <div class='row'>
+    <% @cars.each do |car| %>
+      <div class='card col s6 grey center'>
+          <div class='card-content white-text'>
+            <i class='white-text'> Owner: <%= car.user.full_name %> </i>
+            <h3> <%= car.info %> </h3>
+          </div>
+
+          <div class='card-action'>
+            <%= link_to 'Show', car_path(car), class: 'btn black' %>
+          </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <h4>No cars, please create one</h4>
+<% end %>
+<hr />
+<%= link_to 'New Car', new_car_path, class: 'center waves-effect waves-light btn blue' %>

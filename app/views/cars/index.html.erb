@@ -1,22 +1,4 @@
 <h1> <%= current_user.full_name.pluralize %> Cars </h1>
 <hr />
 
-<% if @cars.any? %>
-  <div class='row'>
-    <% @cars.each do |car| %>
-      <div class='card col s6 grey'>
-          <div class='card-content white-text'>
-            <h3 class='center'> <%= car.info %> </h3>
-          </div>
-
-          <div class='card-action center'>
-            <%= link_to 'Show', car_path(car), class: 'btn black' %>
-          </div>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <h4>No cars, please create one</h4>
-<% end %>
-
-<%= link_to 'New Car', new_car_path, class: 'waves-effect waves-light btn blue' %>
+<%= render 'all_cars' %>

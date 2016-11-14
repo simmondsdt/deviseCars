@@ -1,5 +1,5 @@
 class CarsController < ApplicationController
-  before_action :set_car, except: [:index, :new, :create]
+  before_action :set_car, except: [:index, :new, :create, :all_cars]
 
   def index
     @cars = current_user.cars.all
@@ -24,6 +24,10 @@ class CarsController < ApplicationController
   end
 
   def edit
+    if current_user.id != @car.user_id
+      flash[:error] = 'That car does not belong to you!'
+      redirect_to all_cars_path
+    end
   end
 
   def update
@@ -35,8 +39,13 @@ class CarsController < ApplicationController
   end
 
   def destroy
-    @car.destroy
-    redirect_to cars_path, success: 'Car was deleted!'
+    if current_user.id != @car.user_id
+      flash[:error] = 'That car does not belong to you!'
+      redirect_to all_cars_path
+    else
+      @car.destroy
+      redirect_to cars_path, success: 'Car was deleted!'
+    end
   end
 
   def all_cars
@@ -50,6 +59,6 @@ class CarsController < ApplicationController
     end
 
     def set_car
-      @car = current_user.cars.find(params[:id])
+      @car = Car.find(params[:id])
     end
 end
